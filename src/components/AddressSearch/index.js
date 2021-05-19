@@ -3,7 +3,7 @@ import { fromLonLat, toLonLat } from 'ol/proj';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { RControl, RFeature, RLayerVector, RMap, ROSM, RStyle } from 'rlayers';
 import { Form, Search } from 'semantic-ui-react';
-import { getAddressFromCoords, getAddressSuggestions, getAddressInfo } from '../../classes/DadataAdapter';
+import { getAddressFromCoords, getAddressSuggestions, getAddressInfo } from '../../client';
 import { connectField } from 'uniforms';
 import { colors } from './colors';
 
