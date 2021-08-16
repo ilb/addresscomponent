@@ -63,7 +63,7 @@ export const AddressSearch = ({ address, onAddressChange, delay = 800, disabled 
     <Search
       fluid
       size="small"
-      style={{ opacity: 0.85 }}
+      style={{ opacity: 1 }}
       input={{ fluid: true, placeholder: 'Введите адрес', disabled }}
       loading={loading}
       value={searchValue || ''}
