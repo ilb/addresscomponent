@@ -1,3 +1,4 @@
+import { connectField } from 'uniforms';
 import { useCallback, useEffect, useState } from 'react';
 import { Search } from 'semantic-ui-react';
 import { getAddressSuggestions } from '../../client';
