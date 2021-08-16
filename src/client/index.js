@@ -1,6 +1,8 @@
+const apiPath = process.env.API_PATH || '/api';
+
 const processDadataApi = async (endPoint, params = {}, getResultFromBody) => {
   const queryParams = new URLSearchParams(params).toString();
-  const res = await fetch(`/api/dadata/${endPoint}?${queryParams}`, {
+  const res = await fetch(`${apiPath}/dadata/${endPoint}?${queryParams}`, {
     method: 'GET'
   });
 

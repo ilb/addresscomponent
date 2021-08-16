@@ -3,6 +3,16 @@ import { useCallback, useEffect, useState } from 'react';
 import { Search } from 'semantic-ui-react';
 import { getAddressSuggestions } from '../../client';
 
+const debounce = (f, ms) => {
+  let timeout;
+  return async (...args) => {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      f(...args);
+    }, ms);
+  };
+};
+
 export const AddressSearch = ({ address, onAddressChange, delay = 800, disabled }) => {
   const [searchValue, setSearchValue] = useState(address);
   const [suggestions, setSuggestions] = useState(null);
