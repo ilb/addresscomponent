@@ -13,7 +13,7 @@ const debounce = (f, ms) => {
   };
 };
 
-export const AddressSearch = ({ address, onChange, delay = 800, disabled }) => {
+export const AddressSearch = ({ value: address, onChange, delay = 800, disabled }) => {
   const [searchValue, setSearchValue] = useState(address);
   const [suggestions, setSuggestions] = useState(null);
   const [loading, setLoading] = useState(false);
