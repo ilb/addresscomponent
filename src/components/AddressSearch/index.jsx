@@ -13,7 +13,7 @@ const debounce = (f, ms) => {
   };
 };
 
-export const AddressSearch = ({ address, onAddressChange, delay = 800, disabled }) => {
+export const AddressSearch = ({ address, onChange, delay = 800, disabled }) => {
   const [searchValue, setSearchValue] = useState(address);
   const [suggestions, setSuggestions] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -75,7 +75,7 @@ export const AddressSearch = ({ address, onAddressChange, delay = 800, disabled 
       onResultSelect={useCallback((e, data) => {
         const address = data.result.title;
         setSearchValue(address);
-        onAddressChange && onAddressChange(address);
+        onChange(address);
       }, [])}
       onFocus={() => {
         suggestionsFetchedFor !== address && processSuggestions(address);
