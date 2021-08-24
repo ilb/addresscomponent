@@ -1,6 +1,6 @@
 import { connectField, filterDOMProps } from 'uniforms';
 import { useCallback, useEffect, useState } from 'react';
-import { Form, Header, Label, Search } from 'semantic-ui-react';
+import { Search } from 'semantic-ui-react';
 import { getAddressSuggestions } from '../../client';
 import classNames from 'classnames';
 
@@ -19,6 +19,7 @@ export const AddressSearch = ({ id, className, error, required, label, value: ad
   const [suggestions, setSuggestions] = useState(null);
   const [loading, setLoading] = useState(false);
   const [suggestionsFetchedFor, setSuggestionsFetchedFor] = useState(null);
+  const displayType = props.displayType || 'input';
 
   const fetchSuggestions = useCallback(
     async (address) => {
@@ -65,36 +66,40 @@ export const AddressSearch = ({ id, className, error, required, label, value: ad
       className={classNames(className, { disabled, error, required }, 'field')}
       {...filterDOMProps(props)}>
       {label && <label htmlFor={id}>{label}</label>}
-      <Search
-        fluid
-        size="small"
-        style={{ opacity: 1 }}
-        input={{ fluid: true, placeholder: 'Введите адрес', disabled }}
-        loading={loading}
-        value={searchValue || ''}
-        onSearchChange={useCallback((e, data) => {
-          const address = data.value;
-          setSearchValue(address);
-          processSuggestionsDebounced(address);
-        }, [])}
-        onResultSelect={useCallback((e, data) => {
-          const address = data.result.title;
-          setSearchValue(address);
-          onChange(address);
-        }, [])}
-        onFocus={() => {
-          suggestionsFetchedFor !== address && processSuggestions(address);
-        }}
-        noResultsMessage={'Ничего не найдено'}
-        showNoResults={!loading || !suggestions}
-        results={
-          suggestions
-            ? suggestions.map(({ value }) => ({
+      {displayType === 'input' && (
+        <Search
+          fluid
+          size="small"
+          style={{ opacity: 1 }}
+          input={{ fluid: true, placeholder: 'Введите адрес', disabled }}
+          loading={loading}
+          value={searchValue || ''}
+          onSearchChange={useCallback((e, data) => {
+            const address = data.value;
+            setSearchValue(address);
+            processSuggestionsDebounced(address);
+          }, [])}
+          onResultSelect={useCallback((e, data) => {
+            const address = data.result.title;
+            setSearchValue(address);
+            onChange(address);
+          }, [])}
+          onFocus={() => {
+            suggestionsFetchedFor !== address && processSuggestions(address);
+          }}
+          noResultsMessage={'Ничего не найдено'}
+          showNoResults={!loading || !suggestions}
+          results={
+            suggestions
+              ? suggestions.map(({ value }) => ({
                 title: value
               }))
-            : []
-        }
-      />
+              : []
+          }
+        />
+      )}
+      {displayType === 'text' && address}
+
     </div>
   );
 };
