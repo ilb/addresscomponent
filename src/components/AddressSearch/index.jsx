@@ -100,8 +100,8 @@ export const AddressSearch = ({ id, className, error, required, label, value: ad
       )}
       {displayType === 'text' && (
         <div
-          {/* костыль, чтобы не крашилось при ререндере в котором меняется displayType */}
-          {/* судя по всему реакт хочет, чтобы количество useCallback в ветках условия совпадало*/}
+          /* костыль, чтобы не крашилось при ререндере в котором меняется displayType */
+          /* судя по всему реакт хочет, чтобы количество useCallback в ветках условия совпадало */
           onSearchChange={useCallback((e, data) => {}, [])}
           onResultSelect={useCallback((e, data) => {}, [])}
         >{address}</div>
