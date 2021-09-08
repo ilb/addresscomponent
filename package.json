@@ -19,6 +19,8 @@
     "ol": "^6.5.0",
     "react": "^17.0.2",
     "rlayers": "^1.0.1",
-    "uniforms": "^3.5.1"
+    "uniforms": "^3.5.1",
+    "react-autosuggest": "^10.1.0",
+    "semantic-ui-react": "^2.0.3"
   }
 }
