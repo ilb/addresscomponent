@@ -15,25 +15,10 @@ const debounce = (f, ms) => {
   };
 };
 
-const prepareValue = (address) => {
-  if (address === undefined) {
-    return {}
-  }
-
-  if (typeof address === 'object') {
-    return address
-  }
-
-  if (typeof address === 'string') {
-    return JSON.parse(address)
-  }
-}
-
-export const AddressSearch = ({ id, className, error, required, label, value: address, onChange, delay = 800, disabled, ...props }) => {
-  let fetchedFor = ''
-  address = prepareValue(address)
+export const AddressSearch = ({ id, className, error, required, label, value: address = {}, onChange, onAfterChange, delay = 800, disabled, ...props }) => {
   const [searchValue, setSearchValue] = useState(address.value || '');
   const [suggestions, setSuggestions] = useState([]);
+  const [fetchedFor, setFetchedFor] = useState([]);
   const [loading, setLoading] = useState(false);
   const displayType = props.displayType || 'input';
 
@@ -44,7 +29,7 @@ export const AddressSearch = ({ id, className, error, required, label, value: ad
 
       setSuggestions(suggestions);
       setLoading(false);
-      fetchedFor = address
+      setFetchedFor(address)
     },
     [delay]
   );
@@ -55,13 +40,6 @@ export const AddressSearch = ({ id, className, error, required, label, value: ad
     }, delay),
     [delay]
   );
-
-  const processSuggestions = useCallback(async (address) => {
-    if (address) {
-      setLoading(true);
-      fetchSuggestions(address);
-    }
-  }, []);
 
   const processSuggestionsDebounced = useCallback(async (address) => {
     if (address) {
@@ -110,13 +88,49 @@ export const AddressSearch = ({ id, className, error, required, label, value: ad
   };
 
   const onSuggestionSelected = (event, { suggestion }) => {
-    onChange(JSON.stringify(suggestion));
+    processOnChange(suggestion)
+  };
+
+  const processOnChange = (address) => {
+    onChange(address);
+    onAfterChange && onAfterChange(address);
+  };
+
+  const changeAddress = useCallback((e) => {
+    const value = getValueFromEvent(e)
+    if (value !== null) {
+      setSearchValue(value.toString());
+      processOnChange({ value })
+
+      if (e.type === 'change' && value !== fetchedFor) {
+        processSuggestionsDebounced(value);
+      }
+    }
+  }, [])
+
+  const selectAddress = () => {
+    if (!address.unrestricted_value && searchValue !== fetchedFor) {
+      fetchSuggestions(searchValue)
+
+      if (suggestions.length) {
+        address = suggestions[0]
+        processOnChange(address)
+      }
+    }
+  };
+
+  const getValueFromEvent = (e) => {
+    switch (e.type) {
+      case 'click': return e.target.innerText
+      case 'change': return e.target.value
+      default: return null
+    }
   };
 
   const renderInputComponent = (inputProps) => {
     return (
       <div>
-        <input {...inputProps} />
+        <input {...inputProps}  />
         {
           loading ? <Loader style={{position: 'absolute', right: 10, top: 7, left: 'auto'}} active inline size='tiny' /> : ''
         }
@@ -127,17 +141,8 @@ export const AddressSearch = ({ id, className, error, required, label, value: ad
   const suggestProps = {
     placeholder: "Введите адрес",
     value: searchValue,
-    onChange: useCallback((e) => {
-      const address = e.type === 'click' ? e.target.innerText : e.target.value;
-      console.log(address, fetchedFor)
-      onChange(JSON.stringify({ value: address }))
-      if (typeof address === Object ) {
-        setSearchValue(address.value || '');
-      } else {
-        setSearchValue(address.toString());
-      }
-      address !== fetchedFor && processSuggestionsDebounced(address);
-    }, [])
+    onBlur: selectAddress,
+    onChange: changeAddress,
   }
 
   return (
