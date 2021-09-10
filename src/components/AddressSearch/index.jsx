@@ -1,7 +1,7 @@
-import { connectField, filterDOMProps } from 'uniforms';
-import { useCallback, useEffect, useState } from 'react';
-import { Loader } from 'semantic-ui-react';
-import { getAddressSuggestions } from '../../client';
+import {connectField, filterDOMProps} from 'uniforms';
+import {useCallback, useEffect, useState} from 'react';
+import {Loader} from 'semantic-ui-react';
+import {getAddressSuggestions} from '../../client';
 import classNames from 'classnames';
 import Autosuggest from 'react-autosuggest';
 
@@ -16,6 +16,10 @@ const debounce = (f, ms) => {
 };
 
 export const AddressSearch = ({ id, className, error, required, label, value: address = {}, onChange, onAfterChange, delay = 800, disabled, ...props }) => {
+  if (address === null) {
+    address = {}
+  }
+
   const [searchValue, setSearchValue] = useState(address.value || '');
   const [suggestions, setSuggestions] = useState([]);
   const [fetchedFor, setFetchedFor] = useState([]);
@@ -66,9 +70,7 @@ export const AddressSearch = ({ id, className, error, required, label, value: ad
     }
 
     const regex = new RegExp('^' + escapedValue, 'i');
-    const options = suggestions.filter(suggestion => regex.test(suggestion.value));
-
-    return options;
+    return suggestions.filter(suggestion => regex.test(suggestion.value));
   }
 
   const getSuggestionValue = suggestion => {
@@ -109,8 +111,10 @@ export const AddressSearch = ({ id, className, error, required, label, value: ad
   }, [])
 
   const selectAddress = () => {
-    if (!address.unrestricted_value && searchValue !== fetchedFor) {
-      fetchSuggestions(searchValue)
+    if (!address.unrestricted_value) {
+      if (searchValue.trim() !== fetchedFor.trim()) {
+        fetchSuggestions(searchValue)
+      }
 
       if (suggestions.length) {
         address = suggestions[0]
