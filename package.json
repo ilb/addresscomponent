@@ -1,6 +1,6 @@
 {
   "name": "@ilb/addresscomponent",
-  "version": "1.0.13",
+  "version": "1.0.15",
   "description": "Semantic & Uniforms address component",
   "main": "src/index.js",
   "scripts": {
@@ -18,9 +18,9 @@
   "dependencies": {
     "ol": "^6.5.0",
     "react": "^17.0.2",
-    "rlayers": "^1.0.1",
-    "uniforms": "^3.5.1",
     "react-autosuggest": "^10.1.0",
-    "semantic-ui-react": "^2.0.3"
+    "rlayers": "^1.0.1",
+    "semantic-ui-react": "^2.0.3",
+    "uniforms": "^3.5.1"
   }
 }
