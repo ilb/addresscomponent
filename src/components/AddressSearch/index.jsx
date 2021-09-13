@@ -1,7 +1,7 @@
-import {connectField, filterDOMProps} from 'uniforms';
-import {useCallback, useEffect, useState} from 'react';
-import {Loader} from 'semantic-ui-react';
-import {getAddressSuggestions} from '../../client';
+import { connectField, filterDOMProps } from 'uniforms';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Loader } from 'semantic-ui-react';
+import { getAddressSuggestions } from '../../client';
 import classNames from 'classnames';
 import Autosuggest from 'react-autosuggest';
 
@@ -70,7 +70,9 @@ export const AddressSearch = ({ id, className, error, required, label, value: ad
     }
 
     const regex = new RegExp('^' + escapedValue, 'i');
-    return suggestions.filter(suggestion => regex.test(suggestion.value));
+    const options = suggestions.filter(suggestion => regex.test(suggestion.value));
+
+    return options;
   }
 
   const getSuggestionValue = suggestion => {
@@ -112,7 +114,7 @@ export const AddressSearch = ({ id, className, error, required, label, value: ad
 
   const selectAddress = () => {
     if (!address.unrestricted_value) {
-      if (searchValue.trim() !== fetchedFor.trim()) {
+      if (searchValue !== fetchedFor) {
         fetchSuggestions(searchValue)
       }
 
@@ -155,17 +157,22 @@ export const AddressSearch = ({ id, className, error, required, label, value: ad
       {...filterDOMProps(props)}>
       {label && <label htmlFor={id}>{label}</label>}
       {displayType === 'input' && (
-        <Autosuggest
-          suggestions={suggestions}
-          onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-          onSuggestionsClearRequested={onSuggestionsClearRequested}
-          getSuggestionValue={getSuggestionValue}
-          renderSuggestion={renderSuggestion}
-          onSuggestionSelected={onSuggestionSelected}
-          renderInputComponent={renderInputComponent}
-          value={searchValue || ''}
-          inputProps={suggestProps}
-        />
+        <>
+          <Autosuggest
+            suggestions={suggestions}
+            onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+            onSuggestionsClearRequested={onSuggestionsClearRequested}
+            getSuggestionValue={getSuggestionValue}
+            renderSuggestion={renderSuggestion}
+            onSuggestionSelected={onSuggestionSelected}
+            renderInputComponent={renderInputComponent}
+            value={searchValue || ''}
+            inputProps={suggestProps}
+          />
+          {!!(error) && (
+            <div className="ui red basic pointing label">{error.message}</div>
+          )}
+        </>
       )}
       {displayType === 'text' && (
         <div>{address.value || ''}</div>
