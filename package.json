@@ -1,10 +1,6 @@
 {
   "name": "@ilb/addresscomponent",
-<<<<<<< HEAD
-  "version": "1.0.14",
-=======
   "version": "1.0.15",
->>>>>>> b7c4a77ae52efd853b6388507eeb4dabbfd2ec59
   "description": "Semantic & Uniforms address component",
   "main": "src/index.js",
   "scripts": {
