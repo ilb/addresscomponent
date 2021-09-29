@@ -22,6 +22,7 @@ export default class GetAddressSuggestions {
 
           region: data.region,
           region_iso_code: data.region_iso_code,
+          region_with_type: data.region_with_type,
 
           city: data.city,
           city_type_full: data.city_type_full,
