@@ -18,6 +18,9 @@ export default class GetAddressSuggestions {
           country_iso_code: data.country_iso_code,
 
           area: data.area,
+          area_with_type: data.area_with_type,
+          area_type_full: data.area_type_full,
+
           postal_code: data.postal_code,
 
           region: data.region,
