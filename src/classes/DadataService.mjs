@@ -23,7 +23,7 @@ export default class DadataService {
       const body = await res.json();
       return body.suggestions;
     }
-    return null;
+    return [];
   }
 
   async getAddressesFromCoords(coords, params = {}) {
