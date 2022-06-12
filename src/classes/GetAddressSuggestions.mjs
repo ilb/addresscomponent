@@ -59,6 +59,7 @@ export default class GetAddressSuggestions {
           fias_id: data.fias_id,
           fias_code: data.fias_code,
           fias_level: data.fias_level,
+          kladr_id: data.kladr_id,
           region_kladr_id: data.region_kladr_id
         }));
       }
