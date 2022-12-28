@@ -1,6 +1,6 @@
 import { connectField, filterDOMProps } from 'uniforms';
 import React, { useCallback, useEffect, useState } from 'react';
-import { getAddressSuggestions } from '..';
+import { getAddressSuggestions } from './api/api';
 import classNames from 'classnames';
 import Autosuggest from 'react-autosuggest';
 
