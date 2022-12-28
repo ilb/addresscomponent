@@ -1,7 +1,6 @@
 import { connectField, filterDOMProps } from 'uniforms';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Loader } from 'semantic-ui-react';
-import { getAddressSuggestions } from '../index.js';
+import { getAddressSuggestions } from '..';
 import classNames from 'classnames';
 import Autosuggest from 'react-autosuggest';
 
@@ -137,9 +136,6 @@ export const AddressSearch = ({ id, className, error, required, label, value: ad
     return (
       <div>
         <input {...inputProps}  />
-        {
-          loading ? <Loader style={{position: 'absolute', right: 10, top: 7, left: 'auto'}} active inline size='tiny' /> : ''
-        }
       </div>
     )
   }
