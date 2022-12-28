@@ -1,7 +1,7 @@
 import { connectField, filterDOMProps } from 'uniforms';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Loader } from 'semantic-ui-react';
-import { getAddressSuggestions } from '../../client';
+import { getAddressSuggestions } from '../index.js';
 import classNames from 'classnames';
 import Autosuggest from 'react-autosuggest';
 
