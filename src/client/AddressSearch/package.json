@@ -1,0 +1,18 @@
+{
+  "name": "@ilb/addresscomponent-client",
+  "version": "1.0.0",
+  "description": "Address search field to addresscomponent",
+  "main": "index.jsx",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "mkozhevnikov2323",
+  "license": "ISC",
+  "dependencies": {
+    "classnames": "^2.3.2",
+    "react": "^17.0.2",
+    "react-autosuggest": "^10.1.0",
+    "semantic-ui-react": "^2.0.3",
+    "uniforms": "^3.5.1"
+  }
+}
