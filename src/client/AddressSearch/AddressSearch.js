@@ -29,7 +29,7 @@ export const AddressSearch = ({ id, className, error, required, label, value: ad
     async (address) => {
       const res = await getAddressSuggestions(address, { count: 4 });
       const suggestions = res.suggestions;
-
+            
       setSuggestions(suggestions);
       setLoading(false);
       setFetchedFor(address)
@@ -95,7 +95,7 @@ export const AddressSearch = ({ id, className, error, required, label, value: ad
   };
 
   const processOnChange = (address) => {
-    onChange(address);
+    onChange && onChange(address);
     onAfterChange && onAfterChange(address);
   };
 
