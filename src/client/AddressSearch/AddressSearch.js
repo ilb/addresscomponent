@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { getAddressSuggestions } from './api/api';
 import classNames from 'classnames';
 import Autosuggest from 'react-autosuggest';
+import styles from './AddressSearch.module.scss';
 
 const debounce = (f, ms) => {
   let timeout;
@@ -148,31 +149,33 @@ export const AddressSearch = ({ id, className, error, required, label, value: ad
   }
 
   return (
-    <div
-      className={classNames(className, { disabled, error, required }, 'field')}
-      {...filterDOMProps(props)}>
-      {label && <label htmlFor={id}>{label}</label>}
-      {displayType === 'input' && (
-        <>
-          <Autosuggest
-            suggestions={suggestions}
-            onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-            onSuggestionsClearRequested={onSuggestionsClearRequested}
-            getSuggestionValue={getSuggestionValue}
-            renderSuggestion={renderSuggestion}
-            onSuggestionSelected={onSuggestionSelected}
-            renderInputComponent={renderInputComponent}
-            value={searchValue || ''}
-            inputProps={suggestProps}
-          />
-          {!!(error) && (
-            <div className="ui red basic pointing label">{error.message}</div>
-          )}
-        </>
-      )}
-      {displayType === 'text' && (
-        <div>{address.value || ''}</div>
-      )}
+    <div className={styles.addressSearch}>
+      <div
+        className={classNames(className, { disabled, error, required }, 'addressSearch')}      
+        {...filterDOMProps(props)}>
+        {label && <label htmlFor={id} className="address-label">{label}</label>}
+        {displayType === 'input' && (
+          <>
+            <Autosuggest
+              suggestions={suggestions}
+              onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+              onSuggestionsClearRequested={onSuggestionsClearRequested}
+              getSuggestionValue={getSuggestionValue}
+              renderSuggestion={renderSuggestion}
+              onSuggestionSelected={onSuggestionSelected}
+              renderInputComponent={renderInputComponent}
+              value={searchValue || ''}
+              inputProps={suggestProps}
+            />
+            {!!(error) && (
+              <div className="ui red basic pointing label">{error.message}</div>
+            )}
+          </>
+        )}
+        {displayType === 'text' && (
+          <div>{address.value || ''}</div>
+        )}
+      </div>
     </div>
   );
 };
