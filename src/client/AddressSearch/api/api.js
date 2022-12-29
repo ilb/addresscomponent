@@ -28,7 +28,7 @@ const processDadataApi = async (endPoint, params = {}, getResultFromBody) => {
  * }
  */
 export const getAddressSuggestions = (address, params = {}) => {
-  return processDadataApi('getAddressSuggestions', { ...params, address }, (body) => ({
+  return processDadataApi('addressSuggestions', { ...params, address }, (body) => ({
     suggestions: body
   }));
 };
