@@ -146,6 +146,7 @@ export const AddressSearch = ({ id, className, error, required, label, value: ad
     value: searchValue,
     onBlur: selectAddress,
     onChange: changeAddress,
+    disabled,
   }
 
   return (
