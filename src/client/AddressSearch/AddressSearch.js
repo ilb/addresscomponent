@@ -156,7 +156,7 @@ export const AddressSearch = ({ id, className, error, required, label, value: ad
         {...filterDOMProps(props)}>
         {label && <label htmlFor={id} className="address-label">{label}</label>}
         {displayType === 'input' && (
-          <>
+          <div id={label}>
             <Autosuggest
               suggestions={suggestions}
               onSuggestionsFetchRequested={onSuggestionsFetchRequested}
@@ -171,7 +171,7 @@ export const AddressSearch = ({ id, className, error, required, label, value: ad
             {!!(error) && (
               <div className="ui red basic pointing label">{error.message}</div>
             )}
-          </>
+          </div>
         )}
         {displayType === 'text' && (
           <div>{address.value || ''}</div>
