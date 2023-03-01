@@ -15,7 +15,7 @@ const debounce = (f, ms) => {
   };
 };
 
-export const AddressSearch = ({ id, className, error, required, label, value: address = {}, onChange, onAfterChange, delay = 800, disabled, ...props }) => {
+export const AddressSearch = ({ id, className, error, required, name, label, value: address = {}, onChange, onAfterChange, delay = 800, disabled, ...props }) => {
   if (address === null) {
     address = {}
   }
@@ -147,6 +147,7 @@ export const AddressSearch = ({ id, className, error, required, label, value: ad
     onBlur: selectAddress,
     onChange: changeAddress,
     disabled,
+    id: name
   }
 
   return (
@@ -154,9 +155,9 @@ export const AddressSearch = ({ id, className, error, required, label, value: ad
       <div
         className={classNames(className, { disabled, error, required }, 'addressSearch')}      
         {...filterDOMProps(props)}>
-        {label && <label htmlFor={id} className="address-label">{label}</label>}
+        {label && <label htmlFor={name} className="address-label">{label}</label>}
         {displayType === 'input' && (
-          <div id={label}>
+          <div>
             <Autosuggest
               suggestions={suggestions}
               onSuggestionsFetchRequested={onSuggestionsFetchRequested}

@@ -1,6 +1,6 @@
 {
   "name": "@ilb/addresscomponent-client",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "Address search field to addresscomponent",
   "main": "index.js",
   "scripts": {
