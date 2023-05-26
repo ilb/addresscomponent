@@ -15,7 +15,7 @@ const debounce = (f, ms) => {
   };
 };
 
-export const AddressSearch = ({ id, className, error, required, name, label, value: address = {}, onChange, onAfterChange, delay = 800, disabled, ...props }) => {
+export const AddressSearch = ({ id, className, error, required, name, label, value: address = {}, onChange, onAfterChange, delay = 800, disabled, validateStatus, help, ...props }) => {
   if (address === null) {
     address = {}
   }
@@ -151,32 +151,51 @@ export const AddressSearch = ({ id, className, error, required, name, label, val
   }
 
   return (
-    <div className={styles.addressSearch}>
+    <div className={classNames(styles.addressSearch, required && styles.requireStar)}>
       <div
         className={classNames(className, { disabled, error, required }, 'addressSearch')}      
         {...filterDOMProps(props)}>
         {label && <label htmlFor={name} className="address-label">{label}</label>}
         {displayType === 'input' && (
-          <div>
-            <Autosuggest
-              suggestions={suggestions}
-              onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-              onSuggestionsClearRequested={onSuggestionsClearRequested}
-              getSuggestionValue={getSuggestionValue}
-              renderSuggestion={renderSuggestion}
-              onSuggestionSelected={onSuggestionSelected}
-              renderInputComponent={renderInputComponent}
-              value={searchValue || ''}
-              inputProps={suggestProps}
-            />
+          <div className={styles.warningWpapper}>
+            <div className={validateStatus && styles.border}>
+              <Autosuggest
+                suggestions={suggestions}
+                onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+                onSuggestionsClearRequested={onSuggestionsClearRequested}
+                getSuggestionValue={getSuggestionValue}
+                renderSuggestion={renderSuggestion}
+                onSuggestionSelected={onSuggestionSelected}
+                renderInputComponent={renderInputComponent}
+                value={searchValue || ''}
+                inputProps={suggestProps}
+              />
+            </div>
             {!!(error) && (
               <div className="ui red basic pointing label">{error.message}</div>
+            )}
+            {help && (
+              <>
+                <p className={styles.helpText}>{help}</p>
+                <span className={styles.warningIcon}>
+                  <svg
+                    viewBox="64 64 896 896"
+                    focusable="false"
+                    data-icon="exclamation-circle"
+                    width="1em"
+                    height="1em"
+                    fill="#faad14"
+                    aria-hidden="true">
+                    <path d="M512 64C264.6 64 64 264.6 64 512s200.6 448 448 448 448-200.6 448-448S759.4 64 512 64zm-32 232c0-4.4 3.6-8 8-8h48c4.4 0 8 3.6 8 8v272c0 4.4-3.6 8-8 8h-48c-4.4 0-8-3.6-8-8V296zm32 440a48.01 48.01 0 010-96 48.01 48.01 0 010 96z"></path>
+                  </svg>
+                </span>
+              </>
             )}
           </div>
         )}
         {displayType === 'text' && (
           <div>{address.value || ''}</div>
-        )}
+        )}        
       </div>
     </div>
   );
